@@ -79,6 +79,7 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *pcmanfmcmd[] = { "pcmanfm",  NULL };
 static const char *btopcmd[] = { "st", "-e", "btop", NULL };
 static const char *librewolfcmd[] = { "librewolf", NULL };
+static const char *slockcmd[] = { "slock", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -87,6 +88,7 @@ static const Key keys[] = {
 	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,	                XK_b,	   spawn,          {.v = librewolfcmd } },
 	{ MODKEY, 			XK_Escape, spawn, 	   {.v = btopcmd } },
+	{ MODKEY, 			XK_x,	   spawn, 	   {.v = slockcmd } },
 	{ MODKEY,                       XK_p,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

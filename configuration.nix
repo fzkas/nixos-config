@@ -89,7 +89,8 @@
  
   # Aliases
 	environment.shellAliases = {
-		cdwm = "vim ~/suckless/dwm/config.h";
+		cdwm = "vim ~/nixos-config/suckless/dwm/config.h";
+		wificonnect = "iwctl station wlan0 scan; iwctl station wlan0 connect 'Nothing Phone (4a)_2306'";
 	};
 	
   # Wallpapers
@@ -145,6 +146,7 @@
 		(pkgs.st.overrideAttrs { src = ./suckless/st; })
 		(pkgs.dmenu.overrideAttrs { src = ./suckless/dmenu; })
 		(pkgs.slstatus.overrideAttrs { src = ./suckless/slstatus; })
+		(pkgs.slock.overrideAttrs { src = ./suckless/slock; })
 		#(pkgs.ani-cli.overrideAttrs { src = ./ani-cli; })
 		vim
 		neovim
@@ -152,7 +154,6 @@
 		fastfetch
 		git
 		librewolf
-		zathura
 		st
 		dmenu
 		slstatus
@@ -164,17 +165,13 @@
 		xdg-user-dirs
 		j4-dmenu-desktop
 		picom
-		cmatrix
 		pipes
-		asciiquarium
 		libxcvt
 		btop
 		brightnessctl
 		xss-lock
 		libreoffice
 		obsidian
-		qutebrowser
-		brave
 		codeblocks
 		gnused
 		gnugrep
@@ -189,9 +186,7 @@
 		xauth
 		cmus
 		vitetris
-		lavat	
 		bat
-		mupdf
 		
 		# Lazyvim
 		gcc
@@ -211,9 +206,27 @@
 		nerd-fonts.jetbrains-mono
 		jetbrains-mono
 	 ];
+  # Display manager and screen locker
+	services.displayManager.ly = {
+		enable = true;
+		settings = {
+			clock = "%a %d %b %H:%M";
+			save = true;
+			load = true;
+		};
+	};
 
-	#services.displayManager.ly.enable = true;
-	
+  # Slock
+	programs.slock = {
+		enable = true;
+		};
+	nixpkgs.overlays = [
+		(final: prev: {
+			slock = prev.slock.override {
+				conf = builtins.readFile ./suckless/slock/config.h;
+				};
+			})
+		];	
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
